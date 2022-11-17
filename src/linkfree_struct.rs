@@ -1,6 +1,6 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct LinkFree{
   pub name: String,
   pub account_type: String,
@@ -13,20 +13,46 @@ pub struct LinkFree{
   pub milestones: Vec<MileStones>
 }
 
-#[derive(Debug,Serialize)]
+impl LinkFree{
+  pub fn new() -> Self{
+    Self{
+      name: String::new(),
+      account_type: String::new(),
+      display_stats: false,
+      bio: String::new(),
+      avatar: String::new(),
+      tags: Vec::new(),
+      socials: Vec::new(),
+      links: Vec::new(),
+      milestones: Vec::new()
+    }
+  }
+}
+
+#[derive(Debug,Serialize,Deserialize)]
 pub struct Socials{
   pub platform: String,
   pub url: String
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Links{
   pub name: String,
   pub url: String,
   pub icon: String
 }
 
-#[derive(Debug, Serialize)]
+impl Links{
+  pub fn new() -> Self{
+    Self{
+      name: String::new(),
+      url: String::new(),
+      icon: String::new()
+    }
+  }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct MileStones{
   pub title: String,
   pub date: String,
