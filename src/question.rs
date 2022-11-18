@@ -6,7 +6,7 @@ use serde::{Serialize, Deserialize};
 use user_error::{UserFacingError, UFE};
 use crate::{check_user::check_user, linkfree_struct::{Links, MileStones, Socials, LinkFree}};
 
-pub async fn data() -> Result<LinkFree, UserFacingError>{
+pub async fn data() -> (LinkFree, String){
   let mut linkfree = LinkFree::new();
 
   let username = Text::new("What is yout Github username?").prompt().unwrap();
@@ -51,11 +51,12 @@ pub async fn data() -> Result<LinkFree, UserFacingError>{
     };
   }
   else{
-    return Err(UserFacingError::new(format!("User not found with the username: {username}"))
+    UserFacingError::new(format!("User not found with the username: {username}"))
         .reason("The username you provided is not valid github username")
-        .help("Try again with a valid username"));
+        .help("Try again with a valid username")
+        .print();
   }
-  Ok(linkfree)
+  (linkfree, username)
 }
 
 pub async fn get_icons() -> Vec<String>{
